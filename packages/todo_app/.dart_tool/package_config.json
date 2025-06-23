@@ -164,6 +164,12 @@
       "languageVersion": "3.0"
     },
     {
+      "name": "flutter_hooks",
+      "rootUri": "file:///Users/allik3/.pub-cache/hosted/pub.dev/flutter_hooks-0.20.5",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
+    },
+    {
       "name": "flutter_lints",
       "rootUri": "file:///Users/allik3/.pub-cache/hosted/pub.dev/flutter_lints-2.0.3",
       "packageUri": "lib/",
@@ -506,7 +512,7 @@
       "languageVersion": "3.1"
     }
   ],
-  "generated": "2025-06-23T07:16:49.556519Z",
+  "generated": "2025-06-23T07:23:53.364275Z",
   "generator": "pub",
   "generatorVersion": "3.1.0"
 }
