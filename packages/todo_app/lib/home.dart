@@ -14,9 +14,9 @@ class Home extends HookWidget {
   Widget build(BuildContext context) {
     final TaskStorage _storage = TaskStorage();
     final tasks = useState<TodoList>(TodoList([
-      Task('Phase 1', false),
-      Task('HW', false),
-      Task('HW2', false),
+      Task(title: 'Phase 1', isChecked: false),
+      Task(title: 'HW', isChecked: false),
+      Task(title: 'HW2',isChecked:  false),
     ]));
 
     useEffect(() {
@@ -36,8 +36,9 @@ class Home extends HookWidget {
       context: context,
       builder: (context) => TaskDialog(
         onTaskAdded: (taskTitle){
-            tasks.value.addTask(taskTitle);
-            tasks.value = TodoList([...tasks.value.tasks]);
+            tasks.value = tasks.value.copyWith(
+              tasks: [...tasks.value.tasks, Task(title: taskTitle, isChecked: false)]
+            );
             _saveTasks();
         }
       )
@@ -51,7 +52,7 @@ class Home extends HookWidget {
         backgroundColor: Colors.green[700],
         centerTitle: true,
       ),
-      body:  tasks.value.length() == 0
+      body:  tasks.value.tasks.isEmpty
     ? Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -65,17 +66,21 @@ class Home extends HookWidget {
         ),
       )
     : ListView.builder(
-        itemCount: tasks.value.length(),
+        itemCount: tasks.value.tasks.length,
         itemBuilder: (context, index){
           return TaskTile(
-            task: tasks.value.getTask(index),
+            task: tasks.value.tasks[index],
             onDelete: () {
-                tasks.value.removeTask(index);
-                tasks.value = TodoList([...tasks.value.tasks]);
+                final updatedTasks = [...tasks.value.tasks]..removeAt(index);
+        tasks.value = tasks.value.copyWith(tasks: updatedTasks);
                 _saveTasks();
             },
             onToggle: () {
-                tasks.value.getTask(index).toggleIsChecked();
+                final task = tasks.value.tasks[index];
+                final updatedTasks = [...tasks.value.tasks];
+        final toggled = task.copyWith(isChecked: !task.isChecked);
+        updatedTasks[index] = toggled;
+        tasks.value = tasks.value.copyWith(tasks: updatedTasks);
                 tasks.value = TodoList([...tasks.value.tasks]);
                 _saveTasks();
             },

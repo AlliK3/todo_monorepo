@@ -6,12 +6,13 @@ part of 'task.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-Task _$TaskFromJson(Map<String, dynamic> json) => Task(
-      json['title'] as String,
-      json['isChecked'] as bool,
+_$TaskImpl _$$TaskImplFromJson(Map<String, dynamic> json) => _$TaskImpl(
+      title: json['title'] as String,
+      isChecked: json['isChecked'] as bool,
     );
 
-Map<String, dynamic> _$TaskToJson(Task instance) => <String, dynamic>{
+Map<String, dynamic> _$$TaskImplToJson(_$TaskImpl instance) =>
+    <String, dynamic>{
       'title': instance.title,
       'isChecked': instance.isChecked,
     };

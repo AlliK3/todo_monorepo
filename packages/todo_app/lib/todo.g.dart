@@ -6,12 +6,14 @@ part of 'todo.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-TodoList _$TodoListFromJson(Map<String, dynamic> json) => TodoList(
+_$TodoListImpl _$$TodoListImplFromJson(Map<String, dynamic> json) =>
+    _$TodoListImpl(
       (json['tasks'] as List<dynamic>)
           .map((e) => Task.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
-Map<String, dynamic> _$TodoListToJson(TodoList instance) => <String, dynamic>{
+Map<String, dynamic> _$$TodoListImplToJson(_$TodoListImpl instance) =>
+    <String, dynamic>{
       'tasks': instance.tasks,
     };

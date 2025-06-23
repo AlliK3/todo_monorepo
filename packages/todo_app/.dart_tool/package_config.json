@@ -188,6 +188,18 @@
       "languageVersion": "3.0"
     },
     {
+      "name": "freezed",
+      "rootUri": "file:///Users/allik3/.pub-cache/hosted/pub.dev/freezed-2.5.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
+    },
+    {
+      "name": "freezed_annotation",
+      "rootUri": "file:///Users/allik3/.pub-cache/hosted/pub.dev/freezed_annotation-2.4.4",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
       "name": "frontend_server_client",
       "rootUri": "file:///Users/allik3/.pub-cache/hosted/pub.dev/frontend_server_client-4.0.0",
       "packageUri": "lib/",
@@ -512,7 +524,7 @@
       "languageVersion": "3.1"
     }
   ],
-  "generated": "2025-06-23T07:23:53.364275Z",
+  "generated": "2025-06-23T07:30:19.766761Z",
   "generator": "pub",
   "generatorVersion": "3.1.0"
 }
