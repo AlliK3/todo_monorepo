@@ -1,27 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 
-class TaskDialog extends StatefulWidget {
+
+class TaskDialog extends HookWidget {
   final Function(String) onTaskAdded;
 
   const TaskDialog({super.key, required this.onTaskAdded});
 
-  @override
-  State<TaskDialog> createState() => _TaskDialogState();
-}
-
-class _TaskDialogState extends State<TaskDialog> {
+   @override
+  Widget build(BuildContext context) {
   final TextEditingController _textController = TextEditingController();
 
   void _submit() {
     String taskTitle = _textController.text.trim();
     if (taskTitle.isNotEmpty) {
-      widget.onTaskAdded(taskTitle);
+      onTaskAdded(taskTitle);
       Navigator.of(context).pop();
     }
   }
 
-  @override
-  Widget build(BuildContext context) {
+
     return AlertDialog(
       title: const Text('Add new task'),
       content: TextField(
