@@ -5,6 +5,8 @@ import 'package:todo_app/task_dialog.dart';
 import 'package:todo_app/task_tile.dart';
 import 'package:todo_app/task_storage.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:todo_app/todo_info_dialog.dart';
+
 
 class Home extends HookWidget {
   const Home({super.key});
@@ -51,6 +53,18 @@ class Home extends HookWidget {
         title: const Text("Spartans Todo List"),
         backgroundColor: Colors.green[700],
         centerTitle: true,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.info_outline),
+            tooltip: 'List Info',
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (context) => TodoInfoDialog(todoList: tasks.value),
+              );
+            },
+          )
+        ],
       ),
       body:  tasks.value.tasks.isEmpty
     ? Center(
