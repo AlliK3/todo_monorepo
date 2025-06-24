@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/task.dart';
 import 'package:todo_app/todo.dart';
-import 'package:todo_app/task_dialog.dart';
 import 'package:todo_app/task_tile.dart';
 import 'package:todo_app/task_storage.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:todo_app/todo_info_dialog.dart';
+import 'package:go_router/go_router.dart';
 
 
 class Home extends HookWidget {
@@ -15,7 +15,7 @@ class Home extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final TaskStorage _storage = TaskStorage();
-    final tasks = useState<TodoList>(TodoList([
+    final tasks = useState<TodoList>(const TodoList([
       Task(title: 'Phase 1', isChecked: false),
       Task(title: 'HW', isChecked: false),
       Task(title: 'HW2',isChecked:  false),
@@ -32,19 +32,14 @@ class Home extends HookWidget {
     _storage.saveTasks(tasks.value);
   }
 
-  void _showDialog(){
-
-    showDialog(
-      context: context,
-      builder: (context) => TaskDialog(
-        onTaskAdded: (taskTitle){
-            tasks.value = tasks.value.copyWith(
-              tasks: [...tasks.value.tasks, Task(title: taskTitle, isChecked: false)]
-            );
-            _saveTasks();
-        }
-      )
-    );
+  void showPage()async{
+    final taskTitle = await context.push('/add-task');
+    if (taskTitle is String) {
+      tasks.value = tasks.value.copyWith(
+            tasks: [...tasks.value.tasks, Task(title: taskTitle, isChecked: false)]
+          );
+          _saveTasks();
+    }
   }
 
   
@@ -102,7 +97,7 @@ class Home extends HookWidget {
         }
         ),
         floatingActionButton: FloatingActionButton(
-        onPressed: _showDialog,
+        onPressed: showPage,
         child: const Icon(Icons.add)),
       );
   }
