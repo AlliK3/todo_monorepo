@@ -7,12 +7,12 @@ class AddTaskPage extends HookWidget {
 
    @override
   Widget build(BuildContext context) {
-  final TextEditingController _textController = TextEditingController();
+  final TextEditingController textController = TextEditingController();
 
   void _submit() {
-    String taskTitle = _textController.text.trim();
+    String taskTitle = textController.text.trim();
       if (taskTitle.isNotEmpty) {
-        Navigator.of(context).pop(taskTitle); // ✅ Return the task title
+        Navigator.of(context).pop(taskTitle);
       }
   }
 
@@ -27,7 +27,7 @@ class AddTaskPage extends HookWidget {
         child: Column(
           children: [
             TextField(
-              controller: _textController,
+              controller: textController,
               decoration: const InputDecoration(
                 hintText: 'Enter new task title',
               ),

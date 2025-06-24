@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/home.dart';
 import 'package:go_router/go_router.dart';
-import 'package:todo_app/task_dialog.dart';
+import 'package:todo_ui/task_dialog.dart';
 
 
 

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/task.dart';
+import 'package:todo_ui/task.dart';
 
 class TaskTile extends StatelessWidget {
   final Task task;

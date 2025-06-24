@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/task.dart';
-import 'package:todo_app/todo.dart';
-import 'package:todo_app/task_tile.dart';
-import 'package:todo_app/task_storage.dart';
+import 'package:todo_ui/task.dart';
+import 'package:todo_ui/todo.dart';
+import 'package:todo_ui/task_tile.dart';
+import 'package:todo_ui/task_storage.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:todo_app/todo_info_dialog.dart';
+import 'package:todo_ui/todo_info_dialog.dart';
 import 'package:go_router/go_router.dart';
 
 
@@ -55,7 +55,7 @@ class Home extends HookWidget {
             onPressed: () {
               showDialog(
                 context: context,
-                builder: (context) => TodoInfoDialog(todoList: tasks.value),
+                builder: (context) => TodoInfoPage(todoList: tasks.value),
               );
             },
           )

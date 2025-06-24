@@ -621,6 +621,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.1"
+  todo_ui:
+    dependency: "direct main"
+    description:
+      path: "../todo_ui"
+      relative: true
+    source: path
+    version: "0.0.1"
   typed_data:
     dependency: transitive
     description:

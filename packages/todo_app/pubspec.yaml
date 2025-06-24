@@ -30,9 +30,12 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  todo_ui:
+    path: ../todo_ui
   json_annotation: ^4.9.0
   freezed_annotation: ^2.4.1
   go_router: ^13.0.0
+
 
 
 

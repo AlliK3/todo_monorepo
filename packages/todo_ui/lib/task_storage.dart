@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:todo_app/todo.dart';
+import 'package:todo_ui/todo.dart';
 
 class TaskStorage {
   static const _key = 'tasks';
