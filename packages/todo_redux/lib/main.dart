@@ -1,16 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:todo_redux/app_state.dart';
 import 'package:todo_redux/home.dart';
 import 'package:go_router/go_router.dart';
+import 'package:todo_redux/reducer.dart';
+import 'package:todo_ui/task.dart';
 import 'package:todo_ui/task_dialog.dart';
+import 'package:redux/redux.dart';
 
 
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
+  final Store<AppState> _store = Store<AppState>(
+    appReducer,
+    initialState: AppState(tasks: [
+      const Task(title: 'HW1', isChecked: false),
+      const Task(title: 'HW2', isChecked: true)
+    ])
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -22,14 +34,16 @@ class MyApp extends StatelessWidget {
         ),
         GoRoute(
           path: '/add-task',
-          builder: (context, state) => AddTaskPage(), 
+          builder: (context, state) => const AddTaskPage(), 
         ),
       ],
     );
 
-    return MaterialApp.router(
-      routerConfig: _router,
-      debugShowCheckedModeBanner: false,
+    return StoreProvider(
+      store: _store,
+      child: MaterialApp.router(
+        routerConfig: _router,
+      ),
     );
   }
 }
