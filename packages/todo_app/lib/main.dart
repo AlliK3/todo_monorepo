@@ -3,7 +3,7 @@ import 'package:todo_app/home.dart';
 
 
 void main() {
-  runApp( MaterialApp(
+  runApp( const MaterialApp(
     home: Home()
   ));
 }

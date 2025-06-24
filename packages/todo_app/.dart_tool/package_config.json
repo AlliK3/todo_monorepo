@@ -212,6 +212,12 @@
       "languageVersion": "2.19"
     },
     {
+      "name": "go_router",
+      "rootUri": "file:///Users/allik3/.pub-cache/hosted/pub.dev/go_router-13.2.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.1"
+    },
+    {
       "name": "graphs",
       "rootUri": "file:///Users/allik3/.pub-cache/hosted/pub.dev/graphs-2.3.1",
       "packageUri": "lib/",
@@ -524,7 +530,7 @@
       "languageVersion": "3.1"
     }
   ],
-  "generated": "2025-06-23T07:30:19.766761Z",
+  "generated": "2025-06-23T08:16:33.886615Z",
   "generator": "pub",
   "generatorVersion": "3.1.0"
 }
