@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todo_app/firestore.dart';
 import 'package:todo_ui/task.dart';
 import 'package:todo_ui/todo.dart';
 import 'package:todo_ui/task_tile.dart';
@@ -9,7 +10,9 @@ import 'package:go_router/go_router.dart';
 
 
 class Home extends HookWidget {
-  const Home({super.key});
+  Home({super.key});
+
+  final FirestoreService firesoreService = FirestoreService();
 
 
   @override
@@ -32,9 +35,11 @@ class Home extends HookWidget {
     _storage.saveTasks(tasks.value);
   }
 
-  void showPage()async{
+  void showPage() async{
     final taskTitle = await context.push('/add-task');
+    print('TaskTitle: $taskTitle');
     if (taskTitle is String) {
+      firesoreService.addNote(taskTitle, false);
       tasks.value = tasks.value.copyWith(
             tasks: [...tasks.value.tasks, Task(title: taskTitle, isChecked: false)]
           );
