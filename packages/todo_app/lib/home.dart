@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:todo_app/firestore.dart';
 import 'package:todo_ui/task.dart';
@@ -17,47 +18,20 @@ class Home extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    final todoSnap = useStream(firesoreService.taskStream());
-
-    final TaskStorage _storage = TaskStorage();
     final tasks = useState<TodoList>(const TodoList([
       Task(title: 'Phase 1', isChecked: false),
       Task(title: 'HW', isChecked: false),
       Task(title: 'HW2',isChecked:  false),
     ]));
 
-    if (todoSnap.connectionState == ConnectionState.waiting) {
-      return const Scaffold(
-        body: Center(child: CircularProgressIndicator()),
-      );
-    }
-    
-    final todoList = TodoList(todoSnap.data ?? []);
-
-    useEffect(() {
-        _storage.loadTasks().then((loadedTasks) {
-          tasks.value = loadedTasks;
-        });
-        return null;
-      }, []);
-
-  void _saveTasks() {
-    _storage.saveTasks(tasks.value);
-  }
-
+   
   void showPage() async{
     final taskTitle = await context.push('/add-task');
     if (taskTitle is String) {
       firesoreService.addTask(taskTitle, false);
-      tasks.value = tasks.value.copyWith(
-            tasks: [...tasks.value.tasks, Task(title: taskTitle, isChecked: false)]
-          );
-          _saveTasks();
     }
   }
 
-  
     return Scaffold(
       appBar: AppBar(
         title: const Text("Spartans Todo List"),
@@ -76,41 +50,49 @@ class Home extends HookWidget {
           )
         ],
       ),
-      body:  tasks.value.tasks.isEmpty
-    ? Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'No tasks yet!\nTap + to add one.',
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 18, color: Colors.grey[700]),
-            ),
-          ],
-        ),
-      )
-    : ListView.builder(
-        itemCount: tasks.value.tasks.length,
-        itemBuilder: (context, index){
-          return TaskTile(
-            task: tasks.value.tasks[index],
-            onDelete: () {
-                final updatedTasks = [...tasks.value.tasks]..removeAt(index);
-        tasks.value = tasks.value.copyWith(tasks: updatedTasks);
-                _saveTasks();
-            },
-            onToggle: () {
-                final task = tasks.value.tasks[index];
-                final updatedTasks = [...tasks.value.tasks];
-        final toggled = task.copyWith(isChecked: !task.isChecked);
-        updatedTasks[index] = toggled;
-        tasks.value = tasks.value.copyWith(tasks: updatedTasks);
-                tasks.value = TodoList([...tasks.value.tasks]);
-                _saveTasks();
-            },
-          );
-        }
-        ),
+      body: StreamBuilder<QuerySnapshot>(
+        stream: firesoreService.getTasksStream(),
+        builder: (context, snapshot) {
+          List tasksList = snapshot.data!.docs;
+          // if snapshot has data
+          if(tasksList.isNotEmpty){
+            return ListView.builder(
+              itemCount: tasksList.length,
+              itemBuilder: (context, index){
+                // get each doc
+                DocumentSnapshot document = tasksList[index];
+                String docID = document.id;
+
+                // get task from each doc
+                Map<String, dynamic> data = document.data() as Map<String, dynamic>;
+                String taskTitle = data['title'];
+                bool taskStatus = data['isChecked'];
+
+                // disply as list tile
+                return TaskTile(
+                  task: Task(title: taskTitle, isChecked: taskStatus),
+                  onDelete: (){firesoreService.deleteTask(docID);},
+                  onToggle: (){firesoreService.updateTask(docID, newStatus: !taskStatus);},
+                );
+              }
+            );
+          }
+          else{
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'No tasks yet!\nTap + to add one.',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 18, color: Colors.grey[700]),
+                  ),
+                ],
+              ),
+            );
+          }
+        },
+      ),
         floatingActionButton: FloatingActionButton(
         onPressed: showPage,
         child: const Icon(Icons.add)),

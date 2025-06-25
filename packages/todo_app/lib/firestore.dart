@@ -2,41 +2,32 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:todo_ui/task.dart';
 
 class FirestoreService {
-  final CollectionReference<Map<String, dynamic>> _tasksCollection =
+  final CollectionReference<Map<String, dynamic>> tasks =
       FirebaseFirestore.instance.collection('tasks');
 
   Future<void> addTask(String title, bool isChecked) async {
-    await _tasksCollection.add({
+    await tasks.add({
       'title': title,
       'isChecked': isChecked,
       'timestamp': Timestamp.now(),
     });
   }
 
-  Stream<List<Task>> taskStream() {
-    return _tasksCollection
-        .orderBy('timestamp', descending: true)
-        .snapshots()
-        .map((snapshot) => snapshot.docs.map((doc) {
-              final data = doc.data();
-              return Task(
-                id: doc.id,
-                title: data['title'] ?? '',
-                isChecked: data['isChecked'] ?? false,
-              );
-            }).toList());
+  Stream<QuerySnapshot> getTasksStream(){
+    final tasksStream = tasks.orderBy('timestamp', descending: true).snapshots();
+
+    return tasksStream;
   }
 
-  /// Delete a task by its Firestore ID
-  Future<void> deleteTask(String id) async {
-    await _tasksCollection.doc(id).delete();
+  Future<void> updateTask(String docID, {String? newTitle, bool? newStatus}){
+    final updatedData = <String, dynamic>{'timestamp':Timestamp.now()};
+
+    if(newTitle != null) updatedData['title'] = newTitle;
+    if(newStatus != null) updatedData['isChecked'] = newStatus;
+    return tasks.doc(docID).update(updatedData);
   }
 
-  /// Toggle isChecked or update title
-  Future<void> updateTask(String id, {String? title, bool? isChecked}) async {
-    final updateData = <String, dynamic>{};
-    if (title != null) updateData['title'] = title;
-    if (isChecked != null) updateData['isChecked'] = isChecked;
-    await _tasksCollection.doc(id).update(updateData);
+  Future<void> deleteTask(String docID){
+    return tasks.doc(docID).delete();
   }
 }
