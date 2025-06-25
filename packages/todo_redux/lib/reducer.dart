@@ -1,15 +1,5 @@
-
-
 import 'package:todo_redux/actions.dart';
 import 'package:todo_redux/app_state.dart';
-
-AppState addTaskReducer(AppState state, dynamic action){
-  if(action is AddTaskAction){
-
-  }
-
-  return state;
-}
 
 AppState appReducer(AppState state, dynamic action) {
   if (action is AddTaskAction) {

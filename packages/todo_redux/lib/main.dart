@@ -9,8 +9,7 @@ import 'package:todo_ui/task_dialog.dart';
 import 'package:redux/redux.dart';
 
 
-
-void main() {
+void main() async{
   runApp(MyApp());
 }
 
