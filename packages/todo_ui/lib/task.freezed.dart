@@ -22,6 +22,8 @@ Task _$TaskFromJson(Map<String, dynamic> json) {
 mixin _$Task {
   String get title => throw _privateConstructorUsedError;
   bool get isChecked => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  String? get id => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -33,7 +35,7 @@ abstract class $TaskCopyWith<$Res> {
   factory $TaskCopyWith(Task value, $Res Function(Task) then) =
       _$TaskCopyWithImpl<$Res, Task>;
   @useResult
-  $Res call({String title, bool isChecked});
+  $Res call({String title, bool isChecked, @JsonKey(ignore: true) String? id});
 }
 
 /// @nodoc
@@ -51,6 +53,7 @@ class _$TaskCopyWithImpl<$Res, $Val extends Task>
   $Res call({
     Object? title = null,
     Object? isChecked = null,
+    Object? id = freezed,
   }) {
     return _then(_value.copyWith(
       title: null == title
@@ -61,6 +64,10 @@ class _$TaskCopyWithImpl<$Res, $Val extends Task>
           ? _value.isChecked
           : isChecked // ignore: cast_nullable_to_non_nullable
               as bool,
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -72,7 +79,7 @@ abstract class _$$TaskImplCopyWith<$Res> implements $TaskCopyWith<$Res> {
       __$$TaskImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String title, bool isChecked});
+  $Res call({String title, bool isChecked, @JsonKey(ignore: true) String? id});
 }
 
 /// @nodoc
@@ -87,6 +94,7 @@ class __$$TaskImplCopyWithImpl<$Res>
   $Res call({
     Object? title = null,
     Object? isChecked = null,
+    Object? id = freezed,
   }) {
     return _then(_$TaskImpl(
       title: null == title
@@ -97,6 +105,10 @@ class __$$TaskImplCopyWithImpl<$Res>
           ? _value.isChecked
           : isChecked // ignore: cast_nullable_to_non_nullable
               as bool,
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -104,7 +116,10 @@ class __$$TaskImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$TaskImpl implements _Task {
-  const _$TaskImpl({required this.title, required this.isChecked});
+  const _$TaskImpl(
+      {required this.title,
+      required this.isChecked,
+      @JsonKey(ignore: true) this.id});
 
   factory _$TaskImpl.fromJson(Map<String, dynamic> json) =>
       _$$TaskImplFromJson(json);
@@ -113,10 +128,13 @@ class _$TaskImpl implements _Task {
   final String title;
   @override
   final bool isChecked;
+  @override
+  @JsonKey(ignore: true)
+  final String? id;
 
   @override
   String toString() {
-    return 'Task(title: $title, isChecked: $isChecked)';
+    return 'Task(title: $title, isChecked: $isChecked, id: $id)';
   }
 
   @override
@@ -126,12 +144,13 @@ class _$TaskImpl implements _Task {
             other is _$TaskImpl &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.isChecked, isChecked) ||
-                other.isChecked == isChecked));
+                other.isChecked == isChecked) &&
+            (identical(other.id, id) || other.id == id));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, title, isChecked);
+  int get hashCode => Object.hash(runtimeType, title, isChecked, id);
 
   @JsonKey(ignore: true)
   @override
@@ -150,7 +169,8 @@ class _$TaskImpl implements _Task {
 abstract class _Task implements Task {
   const factory _Task(
       {required final String title,
-      required final bool isChecked}) = _$TaskImpl;
+      required final bool isChecked,
+      @JsonKey(ignore: true) final String? id}) = _$TaskImpl;
 
   factory _Task.fromJson(Map<String, dynamic> json) = _$TaskImpl.fromJson;
 
@@ -158,6 +178,9 @@ abstract class _Task implements Task {
   String get title;
   @override
   bool get isChecked;
+  @override
+  @JsonKey(ignore: true)
+  String? get id;
   @override
   @JsonKey(ignore: true)
   _$$TaskImplCopyWith<_$TaskImpl> get copyWith =>

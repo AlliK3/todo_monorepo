@@ -17,12 +17,23 @@ class Home extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final todoSnap = useStream(firesoreService.taskStream());
+
     final TaskStorage _storage = TaskStorage();
     final tasks = useState<TodoList>(const TodoList([
       Task(title: 'Phase 1', isChecked: false),
       Task(title: 'HW', isChecked: false),
       Task(title: 'HW2',isChecked:  false),
     ]));
+
+    if (todoSnap.connectionState == ConnectionState.waiting) {
+      return const Scaffold(
+        body: Center(child: CircularProgressIndicator()),
+      );
+    }
+    
+    final todoList = TodoList(todoSnap.data ?? []);
 
     useEffect(() {
         _storage.loadTasks().then((loadedTasks) {
@@ -37,9 +48,8 @@ class Home extends HookWidget {
 
   void showPage() async{
     final taskTitle = await context.push('/add-task');
-    print('TaskTitle: $taskTitle');
     if (taskTitle is String) {
-      firesoreService.addNote(taskTitle, false);
+      firesoreService.addTask(taskTitle, false);
       tasks.value = tasks.value.copyWith(
             tasks: [...tasks.value.tasks, Task(title: taskTitle, isChecked: false)]
           );

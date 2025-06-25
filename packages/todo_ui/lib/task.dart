@@ -8,6 +8,7 @@ class Task with _$Task {
   const factory Task({
     required String title,
     required bool isChecked,
+    @JsonKey(ignore: true) String? id,
   }) = _Task;
 
   factory Task.fromJson(Map<String, dynamic> json) => _$TaskFromJson(json);
