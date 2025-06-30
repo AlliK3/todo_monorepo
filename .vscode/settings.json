@@ -1,3 +1,9 @@
 {
-    "cmake.sourceDirectory": "/Users/allik3/Desktop/Programming/flutterApps/todo_monorepo/packages/todo_app/linux"
+    "cmake.sourceDirectory": "/Users/allik3/Desktop/Programming/flutterApps/todo_monorepo/packages/todo_app/linux",
+    "[dart]": {
+        "editor.formatOnSave": true
+    },
+    "editor.defaultFormatter": "Dart-Code.flutter",
+    "dart.sdkPath": null,
+    "dart.flutterSdkPath": "~/Desktop/Programming/flutter"
 }
