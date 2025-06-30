@@ -4,7 +4,6 @@ import 'package:todo_app/firestore.dart';
 import 'package:todo_ui/task.dart';
 import 'package:todo_ui/todo.dart';
 import 'package:todo_ui/task_tile.dart';
-import 'package:todo_ui/task_storage.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:todo_ui/todo_info_dialog.dart';
 import 'package:go_router/go_router.dart';
@@ -21,7 +20,7 @@ class Home extends HookWidget {
     final tasks = useState<TodoList>(const TodoList([
       Task(title: 'Phase 1', isChecked: false),
       Task(title: 'HW', isChecked: false),
-      Task(title: 'HW2',isChecked:  false),
+      Task(title: 'HW2',isChecked:  true),
     ]));
 
    
@@ -31,7 +30,7 @@ class Home extends HookWidget {
       firesoreService.addTask(taskTitle, false);
     }
   }
-
+    
     return Scaffold(
       appBar: AppBar(
         title: const Text("Spartans Todo List"),

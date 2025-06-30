@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:todo_ui/task.dart';
 
 class FirestoreService {
   final CollectionReference<Map<String, dynamic>> tasks =

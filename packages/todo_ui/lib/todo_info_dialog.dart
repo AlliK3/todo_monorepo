@@ -14,6 +14,7 @@ class TodoInfoPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.green[700],
         title: const Text('Todo List Info'),
       ),
       body: Padding(
@@ -28,6 +29,7 @@ class TodoInfoPage extends StatelessWidget {
             const Spacer(),
             Center(
               child: ElevatedButton(
+                style: TextButton.styleFrom(backgroundColor: Colors.green[700]),
                 onPressed: () => Navigator.of(context).pop(),
                 child: const Text('Close'),
               ),
