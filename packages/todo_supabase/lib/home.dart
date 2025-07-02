@@ -5,6 +5,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:todo_ui/task.dart';
+import 'package:todo_ui/task_tile.dart';
 import 'package:todo_ui/todo.dart';
 import 'package:todo_ui/todo_info_dialog.dart';
 
@@ -50,6 +51,25 @@ class Home extends HookWidget {
           )
         ],
       ),
+      body: StreamBuilder<List<Map<String, dynamic>>>(
+        stream: Supabase.instance.client.from('todos').stream(primaryKey: ['id']),
+        builder: (context, snapshot){
+          if(!snapshot.hasData){
+            return const Center(child: CircularProgressIndicator());
+          }
+          final tasks = snapshot.data!;
+          return ListView.builder(
+            itemCount: tasks.length,
+            itemBuilder: (context, index){
+              final task_data = tasks[index];
+              final task = Task(title: task_data['title'], isChecked: task_data['is_completed']);
+              return TaskTile(
+                task: task,
+                 onDelete: (){},
+                  onToggle: (){});
+            }
+          );
+        }),
         floatingActionButton: FloatingActionButton(
         onPressed: showPage,
         child: const Icon(Icons.add)),
