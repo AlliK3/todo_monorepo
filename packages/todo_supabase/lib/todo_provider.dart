@@ -11,5 +11,6 @@ class TodoProvider extends ChangeNotifier {
     // Add to Supabase and update local state
     _isLoading = false;
     notifyListeners();
+
   }
 }
